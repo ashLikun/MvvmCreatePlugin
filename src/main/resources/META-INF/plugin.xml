@@ -1,0 +1,28 @@
+<idea-plugin>
+    <!--    <id>com.ashlikun.plugin.mvvmcreate.id</id>-->
+    <name>MvvmCreatePlug</name>
+    <version>1.0</version>
+    <vendor email="496546144@qq.com" url="https://github.com/ashLikun/MvvmCreate">likun</vendor>
+
+    <description><![CDATA[
+      一键生成Mvvm架构的代码，必须使用我自己的Mvvm代码架构，才能生成对应的代码
+    ]]></description>
+
+    <change-notes><![CDATA[
+   一键生成Mvvm架构的代码，必须使用我自己的Mvvm代码架构，才能生成对应的代码
+    ]]>
+    </change-notes>
+    <depends>com.intellij.modules.androidstudio</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="MvvmPluginID" class="MvvmCreateAction" text="MvvmHelper" description="生成Mvvm的框架代码插件">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
+        </action>
+    </actions>
+
+</idea-plugin>
