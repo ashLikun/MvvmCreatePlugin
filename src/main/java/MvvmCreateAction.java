@@ -80,14 +80,14 @@ public class MvvmCreateAction extends AnAction {
         String content = "";
         switch (codeType) {
             case Activity:
-                fileName = "MainActivity.kt.ftl";
+                fileName = data.isList? "/list/MainListActivity.kt.ftl" :"MainActivity.kt.ftl";
                 content = Utils.readTemplateFile(this, fileName);
                 content = Utils.dealTemplateContent(project, data, content);
                 Utils.writeToFile(content, virtualFile.getPath() + "/view/activity/", data.view + ".kt");
                 Utils.addRouterPath(project, virtualFile, data);
                 break;
             case Fragment:
-                fileName = "MainFragment.kt.ftl";
+                fileName = data.isList? "/list/MainListFragment.kt.ftl" :"MainFragment.kt.ftl";
                 content = Utils.readTemplateFile(this, fileName);
                 content = Utils.dealTemplateContent(project, data, content);
                 Utils.writeToFile(content, virtualFile.getPath() + "/view/fragment/", data.view + ".kt");
@@ -100,7 +100,7 @@ public class MvvmCreateAction extends AnAction {
                 Utils.writeToFile(content, resPath + "/layout/", data.layout + ".xml");
                 break;
             case ViewModel:
-                fileName = "MainViewModel.kt.ftl";
+                fileName = data.isList? "/list/MainListViewModel.kt.ftl" :"MainViewModel.kt.ftl";
                 content = Utils.readTemplateFile(this, fileName);
                 content = Utils.dealTemplateContent(project, data, content);
                 Utils.writeToFile(content, virtualFile.getPath() + "/viewmodel/", data.viewMode + ".kt");

@@ -22,6 +22,7 @@ public class MvvmDialog extends JDialog {
     private JLabel packageLabel;
     private JRadioButton activityRadioButton;
     private JRadioButton fragmentRadioButton;
+    private JRadioButton isListRadioButton;
     private String modeName;
 
     public MvvmDialog(String packageName, String modeName, DialogCallBack dialogCallBack) {
@@ -35,7 +36,9 @@ public class MvvmDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 InputContentData data = new InputContentData();
                 data.isActivity = activityRadioButton.isSelected();
+                data.isList = isListRadioButton.isSelected();
                 data.name = nameField.getText().trim();
+
                 data.desc = descField.getText().trim();
                 data.view = activityNameField.getText().trim();
                 data.viewMode = viewModelNameField.getText().trim();

@@ -8,7 +8,7 @@ import ${RouterPathPackage}
 
 import ${packageName}.R
 import ${packageName}.viewmodel.${vmName}
-
+import kotlinx.android.synthetic.main.${layoutName}.*
 /**
  * @author　　: 李坤
  * 创建时间: ${mData}
@@ -25,10 +25,6 @@ class ${activityClass} : BaseMvvmActivity<${vmName}>() {
     }
 
     override fun initView() {
-
-    }
-
-    override fun clearData() {
-
+        toolbar.setBack(this)
     }
 }

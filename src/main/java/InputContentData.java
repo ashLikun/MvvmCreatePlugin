@@ -19,6 +19,8 @@ class InputContentData {
     String layout;
     String viewMode;
     String packge;
+    //是否是列表
+    boolean isList = false;
 
     public String currDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
@@ -26,6 +28,6 @@ class InputContentData {
     }
 
     public String getRouterPath() {
-        return isActivity? "ACTIVITY" + Utils.routerPath(name) : "FRAGMENT" +Utils.routerPath(name);
+        return isActivity ? "ACTIVITY" + Utils.routerPath(name) : "FRAGMENT" + Utils.routerPath(name);
     }
 }

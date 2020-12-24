@@ -1,6 +1,7 @@
 package ${packageName}.viewmodel
-
+import androidx.lifecycle.MutableLiveData
 import com.ashlikun.core.mvvm.BaseViewModel
+import  com.ashlikun.core.mvvm.launch
 import ${showToast}
 import ${httpCallbackHandle}
 /**
@@ -12,20 +13,24 @@ import ${httpCallbackHandle}
  */
 class ${vmName} : BaseViewModel(){
 
+    val mainData: MutableLiveData<String> by lazy {
+        get(String::class.java) as MutableLiveData<String>
+    }
+
     override fun onCreate() {
         super.onCreate()
+        getData()
     }
 
     /**
     * 获取数据
     */
-    fun getData() {
+    fun getData() = launch {
         val handle = HttpCallbackHandle[this]
-        ApiLogin.api.aaa( handle) { result ->
-            if(result.isSucceed){
-
-            }else{
-                result.showToast()
+        ApiService.api.testSync(handle)?.also { result ->
+            if (result.isSucceed) {
+                clearData()
+                mainData.value = result.data
             }
         }
     }

@@ -179,6 +179,17 @@ class Utils {
         if (content.contains("${layoutName}")) {
             content = content.replace("${layoutName}", data.layout);
         }
+
+        //list
+        if (content.contains("${BaseListViewModel}")) {
+            content = content.replace("${BaseListViewModel}", getFilePackage(project, "BaseListViewModel.kt", false));
+        }
+        if (content.contains("${BaseSuperListFragment}")) {
+            content = content.replace("${BaseSuperListFragment}", getFilePackage(project, "BaseSuperListFragment.kt", false));
+        }
+        if (content.contains("${BaseSuperListActivity}")) {
+            content = content.replace("${BaseSuperListActivity}", getFilePackage(project, "BaseSuperListActivity.kt", false));
+        }
         return content;
     }
 
@@ -246,8 +257,8 @@ class Utils {
                 file.createNewFile();
             }
 
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
+            OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+            BufferedWriter bw = new BufferedWriter(write);
             bw.write(content);
             bw.close();
         } catch (IOException e) {
@@ -299,6 +310,7 @@ class Utils {
         content.append("/");
         content.append(data.name.toLowerCase());
         content.append("\"");
+
         PsiFile[] psiFiles = FilenameIndex.getFilesByName(project, "RouterPath.kt", GlobalSearchScope.projectScope(project));
         for (PsiFile f : psiFiles) {
             VirtualFile currentVFile = f.getVirtualFile();
@@ -315,17 +327,16 @@ class Utils {
                 boolean isReadContains = false;
                 while ((line = randomAccessFile.readLine()) != null) {
                     // 找到application节点的末尾
-                    if (line.contains("}")) {
+                    if (line.trim().equals("}")) {
                         isReadContains = true;
                     }
                     if (isReadContains) {
                         houxuContent.append("\n" + line);
                     }
                 }
-                houxuContent.delete(0, 1);
                 randomAccessFile.seek(randomAccessFile.length() - houxuContent.length());
                 houxuContent.insert(0, content + "\n");
-                randomAccessFile.write(houxuContent.toString().getBytes());
+                randomAccessFile.write(houxuContent.toString().getBytes("utf-8"));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -371,7 +382,7 @@ class Utils {
                     houxuContent.delete(0, 1);
                     randomAccessFile.seek(randomAccessFile.length() - houxuContent.length());
                     houxuContent.insert(0, content + "\n");
-                    randomAccessFile.write(houxuContent.toString().getBytes());
+                    randomAccessFile.write(houxuContent.toString().getBytes("utf-8"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
