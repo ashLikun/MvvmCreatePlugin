@@ -1,15 +1,16 @@
-package ${packageName}.view.fragment
+package ${packageName}.view.activity
 
 import androidx.lifecycle.Observer
-import com.ashlikun.core.mvvm.BaseMvvmFragment
+import com.ashlikun.core.mvvm.BaseMvvmActivity
 import com.ashlikun.core.mvvm.IViewModel
 import com.alibaba.android.arouter.facade.annotation.Route
-import ${BaseSuperListFragment}
-import ${RouterPathPackage}
 import com.ashlikun.loadswitch.ContextData
+import ${RouterPathPackage}
+import ${BaseSuperListActivity}
 import ${packageName}.R
 import ${packageName}.viewmodel.${vmName}
-import kotlinx.android.synthetic.main.${layoutName}.*
+import ${packageName}.databinding.${viewBinding}
+
 /**
  * @author　　: 李坤
  * 创建时间: ${mData}
@@ -19,15 +20,15 @@ import kotlinx.android.synthetic.main.${layoutName}.*
  */
 @Route(path = RouterPath.${RouterPath})
 @IViewModel(${vmName}::class)
-class ${fragmentClass} : BaseSuperListFragment<${vmName}>() {
+class ${activityClass} : BaseSuperListActivity<${vmName}>() {
+    val binding by lazy {
+        ${viewBinding}.inflate(layoutInflater)
+    }
     override val adapter by lazy {
-        object : CommonAdapter<String>(requireContext(), null) {
+        object : CommonAdapter<String>(this, null) {
             override fun convert(holder: ViewHolder, t: String) {
             }
         }
-    }
-    override fun getLayoutId(): Int {
-        return R.layout.${layoutName}
     }
 
     override fun initView() {
@@ -35,13 +36,13 @@ class ${fragmentClass} : BaseSuperListFragment<${vmName}>() {
     }
     override fun initData() {
         super.initData()
-        viewModel.mainData.observe(this, Observer {
+        viewModel.mainData.observe(this) {
             adapter.datas = it
             adapter.notifyDataSetChanged()
             if (adapter.isEmpty) {
                 showEmpty()
             }
-        })
+        }
     }
     override fun onRefresh() {
         viewModel.getData(true)
@@ -56,5 +57,5 @@ class ${fragmentClass} : BaseSuperListFragment<${vmName}>() {
         viewModel.getData(true)
     }
 
-    override fun getSuperRecyclerView() = superRecyclerView
+    override fun getSuperRecyclerView() = binding.superRecyclerView
 }

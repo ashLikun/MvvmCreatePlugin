@@ -38,13 +38,13 @@ class ${activityClass} : BaseSuperListActivity<${vmName}>() {
     }
     override fun initData() {
         super.initData()
-        viewModel.mainData.observe(this, Observer {
+        viewModel.mainData.observe(this) {
             adapter.datas = it
             adapter.notifyDataSetChanged()
             if (adapter.isEmpty) {
                 showEmpty()
             }
-        })
+        }
     }
     override fun onRefresh() {
         viewModel.getData(true)

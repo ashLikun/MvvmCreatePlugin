@@ -14,7 +14,7 @@ import ${httpCallbackHandle}
 class ${vmName} : BaseViewModel(){
 
     val mainData: MutableLiveData<String> by lazy {
-        get(String::class.java) as MutableLiveData<String>
+        get()
     }
 
     override fun onCreate() {
@@ -26,8 +26,8 @@ class ${vmName} : BaseViewModel(){
     * 获取数据
     */
     fun getData() = launch {
-        val handle = HttpCallbackHandle[this]
-        ApiService.api.testSync(handle)?.also { result ->
+        val handle = HttpUiHandle[this]
+        ApiMain.api.test(handle)?.also { result ->
             if (result.isSucceed) {
                 clearData()
                 mainData.value = result.data

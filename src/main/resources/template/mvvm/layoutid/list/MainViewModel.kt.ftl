@@ -14,7 +14,7 @@ import ${httpCallbackHandle}
 class ${vmName} : BaseListViewModel(){
 
     val mainData: MutableLiveData<ArrayList<String>> by lazy {
-        get(ArrayList::class.java) as MutableLiveData<ArrayList<String>>
+        get()
     }
 
     override fun onCreate() {
@@ -26,13 +26,13 @@ class ${vmName} : BaseListViewModel(){
     * 获取数据
     */
     fun getData(isStart: Boolean) = launch {
-        val handle = HttpCallbackHandle[this]
+        val handle = HttpUiHandle[this]
                 .setLoadingStatus(this)
         if (isStart) {
             cleanPage()
         }
 
-        ApiService.api.testSync(handle)?.also { result ->
+        ApiMain.api.testSync(handle)?.also { result ->
             if (result.isSucceed) {
                 result.setPageHelp(pageHelp!!)
                 if (isStart) {
