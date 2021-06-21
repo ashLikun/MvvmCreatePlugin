@@ -4,9 +4,12 @@ import androidx.lifecycle.Observer
 import com.ashlikun.core.mvvm.BaseMvvmFragment
 import com.ashlikun.core.mvvm.IViewModel
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.ashlikun.adapter.ViewHolder
+import com.ashlikun.adapter.recyclerview.CommonAdapter
 import ${BaseSuperListFragment}
 import ${RouterPathPackage}
 import com.ashlikun.loadswitch.ContextData
+import ${showEmpty}
 import ${packageName}.R
 import ${packageName}.viewmodel.${vmName}
 import ${packageName}.databinding.${viewBinding}
@@ -31,7 +34,6 @@ class ${fragmentClass} : BaseSuperListFragment<${vmName}>() {
     }
 
     override fun initView() {
-        toolbar.setBack(this)
     }
     override fun initData() {
         super.initData()
@@ -56,5 +58,5 @@ class ${fragmentClass} : BaseSuperListFragment<${vmName}>() {
         viewModel.getData(true)
     }
 
-    override fun getSuperRecyclerView() = superRecyclerView
+    override fun getSuperRecyclerView() = binding.superRecyclerView
 }

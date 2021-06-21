@@ -4,9 +4,12 @@ import androidx.lifecycle.Observer
 import com.ashlikun.core.mvvm.BaseMvvmActivity
 import com.ashlikun.core.mvvm.IViewModel
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.ashlikun.adapter.ViewHolder
+import com.ashlikun.adapter.recyclerview.CommonAdapter
 import com.ashlikun.loadswitch.ContextData
 import ${RouterPathPackage}
 import ${BaseSuperListActivity}
+import ${showEmpty}
 import ${packageName}.R
 import ${packageName}.viewmodel.${vmName}
 import kotlinx.android.synthetic.main.${layoutName}.*

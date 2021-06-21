@@ -34,5 +34,5 @@ class InputContentData {
     val routerPath: String
         get() = if (isActivity) "ACTIVITY" + Utils.routerPath(name) else "FRAGMENT" + Utils.routerPath(name)
 
-    fun getViewBindingClass() = Utils.tuofeng(layout)
+    fun getViewBindingClass() = Utils.tuofeng(layout) + "Binding"
 }

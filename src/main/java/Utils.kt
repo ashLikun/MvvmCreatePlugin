@@ -179,6 +179,7 @@ internal object Utils {
             content = content.replace("\${layoutName}", data.layout)
         }
 
+
         //list
         if (content.contains("\${BaseListViewModel}")) {
             content = content.replace("\${BaseListViewModel}", getFilePackage(project, "BaseListViewModel.kt", false))
@@ -190,6 +191,10 @@ internal object Utils {
         if (content.contains("\${BaseSuperListActivity}")) {
             content =
                 content.replace("\${BaseSuperListActivity}", getFilePackage(project, "BaseSuperListActivity.kt", false))
+        }
+        if (content.contains("\${showEmpty}")) {
+            content =
+                content.replace("\${showEmpty}", getFilePackage(project, "BaseListViewModel.kt", true) + ".showEmpty")
         }
         //viewbinding
         if (content.contains("\${viewBinding}")) {
@@ -325,16 +330,19 @@ internal object Utils {
                 randomAccessFile = RandomAccessFile(manifestPath, "rw")
                 //追加文件后续的内容
                 val houxuContent = StringBuilder()
+                var isZhaoDao = false
                 // 每一行的内容
                 var line = ""
-                while (!randomAccessFile.readLine()?.also { line = it }.isNullOrEmpty()) {
+                while (randomAccessFile.readLine()?.also { line = it } != null) {
                     // 找到application节点的末尾
-                    if (line.trim() == "}") {
+                    if (!isZhaoDao)
+                        isZhaoDao = line.trim() == "}"
+                    if (isZhaoDao) {
                         houxuContent.append("\n$line")
                     }
                 }
                 randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
-                houxuContent.insert(0, "$content\n")
+                houxuContent.insert(0, "$content")
                 randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -366,18 +374,21 @@ internal object Utils {
                     randomAccessFile = RandomAccessFile(manifestPath, "rw")
                     //追加文件后续的内容
                     val houxuContent = StringBuilder()
+                    var isZhaoDao = false
                     // 每一行的内容
                     var line = ""
-                    while (!randomAccessFile.readLine()?.also { line = it }.isNullOrEmpty()) {
+                    while (randomAccessFile.readLine()?.also { line = it } != null) {
                         // 找到application节点的末尾
-                        if (line.contains("</application>")) {
+                        if (!isZhaoDao)
+                            isZhaoDao = line.contains("</application>")
+                        if (isZhaoDao) {
                             // 在application节点最后插入新创建的activity节点
                             houxuContent.append("\n$line")
                         }
                     }
                     houxuContent.delete(0, 1)
                     randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
-                    houxuContent.insert(0, content + "\n")
+                    houxuContent.insert(0, content)
                     randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
                 } catch (e: Exception) {
                     e.printStackTrace()

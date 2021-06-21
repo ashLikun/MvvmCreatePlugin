@@ -22,9 +22,6 @@ class ${fragmentClass} : BaseMvvmFragment<${vmName}>() {
     val binding by lazy {
         ${viewBinding}.inflate(layoutInflater)
     }
-    override fun getLayoutId(): Int {
-        return R.layout.${layoutName}
-    }
 
     override fun initView() {
 
