@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.ashlikun.supertoobar.SuperToolBar>
+        app:layout_constraintTop_toTopOf="parent"
+        app:stb_title="${mvvmDesc}"></com.ashlikun.supertoobar.SuperToolBar>
 
     <com.ashlikun.xrecycleview.SuperRecyclerView
         android:id="@+id/superRecyclerView"

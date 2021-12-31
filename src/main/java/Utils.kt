@@ -194,7 +194,7 @@ internal object Utils {
         }
         if (content.contains("\${showEmpty}")) {
             content =
-                content.replace("\${showEmpty}", getFilePackage(project, "BaseListViewModel.kt", true) + ".showEmpty")
+                content.replace("\${showEmpty}", getFilePackage(project, "ActivityExtend.kt", true) + ".showEmpty")
         }
         //viewbinding
         if (content.contains("\${viewBinding}")) {
