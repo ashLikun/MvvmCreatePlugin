@@ -1,39 +1,30 @@
 plugins {
-    id "java"
-    id "idea"
+    id 'java'
     id 'org.jetbrains.intellij' version '0.7.3'
     id 'org.jetbrains.kotlin.jvm' version '1.5.0'
 }
+apply plugin: 'kotlin'
+apply plugin: 'org.jetbrains.intellij'
 ext.StudioCompilePath = 'D:\\android_studio\\ide'
 group 'com.ashLikun.plugins'
 version '1.0'
-buildPlugin {
-    buildSearchableOptions.enabled = false
-}
 repositories {
     mavenCentral()
-    maven {
-        name 'gradle-releases'
-        url 'https://repo.gradle.org/gradle/libs-releases'
-    }
 }
+
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
-//    compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-//    compileOnly fileTree(dir: "$StudioCompilePath/plugins/java/lib", include: ['*.jar'])
-//    compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-//    testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-//    testCompile fileTree(dir: "$StudioCompilePath/plugins/java/lib", include: ['*.jar'])
-//    testCompile fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-//    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     pluginName = 'MvvmCreate'
     //https://www.jetbrains.com/intellij-repository/releases
-    //version = '2018.1.1'
+    //如果指定了' localPath '和' version '，则第二个参数将被忽略
+    version '2021.1'
     //for as local,intelliJ IDEA version is not recommended.
     localPath = "$StudioCompilePath"
     sandboxDirectory = "${project.buildDir}/idea-sandbox"
@@ -45,9 +36,20 @@ patchPluginXml {
     pluginId = "com.ashlikun.plugin.mvvmcreate.id"
     it.version = "${project.version}"
     //AI-171 for AS-3.0，AI-173 for AS-3.1
-    sinceBuild = "200"
-    untilBuild = ""
+    //最低支持的版本
+    //版本参考：https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html?from=jetbrains.org#intellij-platform-based-products-of-recent-ide-versions
+    sinceBuild '203'
+    //最高支持的版本，不能不设置，不设置是默认为 project.version
+    untilBuild ''
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      自定义生成Mvvm代码"""
+}
+test {
+    useJUnitPlatform()
+}
+tasks {
+    //由于gradle-intellij-plugin本机不支持Android Studio，它不知道本地As SDK应该使用哪个编译器版本，并且它尝试使用与As相同的版本进行编译，而As不存在。要解决这个问题，您需要使用检测dsl显式地指定特定的编译器版本。
+    instrumentCode {
+        compilerVersion = "203.7717.56"
+    }
 }
