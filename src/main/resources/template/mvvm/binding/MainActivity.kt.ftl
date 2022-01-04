@@ -23,6 +23,6 @@ class ${activityClass} : BaseMvvmActivity<${vmName}>() {
         ${viewBinding}.inflate(layoutInflater)
     }
     override fun initView() {
-        toolbar.setBack(this)
+        toolbar?.setBack(this)
     }
 }

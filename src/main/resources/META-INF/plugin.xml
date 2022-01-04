@@ -9,7 +9,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-   一键生成Mvvm架构的代码，必须使用我自己的Mvvm代码架构，才能生成对应的代码
+   2.0
     ]]>
     </change-notes>
     <depends>com.intellij.modules.androidstudio</depends>

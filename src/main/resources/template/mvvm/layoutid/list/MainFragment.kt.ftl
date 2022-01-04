@@ -5,7 +5,7 @@ import com.ashlikun.core.mvvm.BaseMvvmFragment
 import com.ashlikun.core.mvvm.IViewModel
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.ashlikun.adapter.ViewHolder
-import com.ashlikun.adapter.recyclerview.CommonAdapter
+import com.ashlikun.adapter.recyclerview.common.CommonAdapter
 import ${BaseSuperListFragment}
 import ${RouterPathPackage}
 import com.ashlikun.loadswitch.ContextData
@@ -53,7 +53,7 @@ class ${fragmentClass} : BaseSuperListFragment<${vmName}>() {
         viewModel.getData(false)
     }
 
-    override fun onRetryClick(data: ContextData?) {
+    override fun onRetryClick(data: ContextData) {
         super.onRetryClick(data)
         viewModel.getData(true)
     }

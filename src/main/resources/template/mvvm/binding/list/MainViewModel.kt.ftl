@@ -1,5 +1,4 @@
 package ${packageName}.viewmodel
-import androidx.lifecycle.MutableLiveData
 import ${BaseListViewModel}
 import  com.ashlikun.core.mvvm.launch
 import ${showToast}
@@ -13,9 +12,7 @@ import ${httpCallbackHandle}
  */
 class ${vmName} : BaseListViewModel(){
 
-    val mainData: MutableLiveData<ArrayList<String>> by lazy {
-        get()
-    }
+    val mainData = get<List<String>>()
 
     override fun onCreate() {
         super.onCreate()
@@ -26,6 +23,7 @@ class ${vmName} : BaseListViewModel(){
     * 获取数据
     */
     fun getData(isStart: Boolean) = launch {
+        if (isStart) cleanPage()
         val handle = HttpUiHandle[this]
                 .setLoadingStatus(this)
         ApiMain.api.test(handle)?.also { result ->
