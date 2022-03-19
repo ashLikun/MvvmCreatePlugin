@@ -23,7 +23,7 @@ import ${packageName}.databinding.${viewBinding}
 @Route(path = RouterPath.${RouterPath})
 @IViewModel(${vmName}::class)
 class ${fragmentClass} : BaseSuperListFragment<${vmName}>() {
-    val binding by lazy {
+    override val binding by lazy {
         ${viewBinding}.inflate(layoutInflater)
     }
     override val adapter by lazy {

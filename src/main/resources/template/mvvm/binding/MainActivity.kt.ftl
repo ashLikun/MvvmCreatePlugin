@@ -19,7 +19,7 @@ import ${packageName}.databinding.${viewBinding}
 @Route(path = RouterPath.${RouterPath})
 @IViewModel(${vmName}::class)
 class ${activityClass} : BaseMvvmActivity<${vmName}>() {
-    val binding by lazy {
+    override val binding by lazy {
         ${viewBinding}.inflate(layoutInflater)
     }
     override fun initView() {

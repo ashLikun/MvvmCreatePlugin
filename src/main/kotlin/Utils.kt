@@ -335,8 +335,9 @@ internal object Utils {
                 var line = ""
                 while (randomAccessFile.readLine()?.also { line = it } != null) {
                     // 找到application节点的末尾
-                    if (!isZhaoDao)
+                    if (!isZhaoDao){
                         isZhaoDao = line.trim() == "}"
+                    }
                     if (isZhaoDao) {
                         houxuContent.append("\n$line")
                     }
