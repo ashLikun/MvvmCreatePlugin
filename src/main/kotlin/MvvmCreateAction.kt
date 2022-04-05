@@ -93,7 +93,8 @@ class MvvmCreateAction : AnAction() {
                 Utils.addRouterPath(project, virtualFile, data)
             }
             CodeType.Layout -> {
-                fileName = "activity_main.xml.ftl"
+                fileName = if (data.isList) "activity_main_list.xml.ftl" else "activity_main.xml.ftl"
+
                 content = Utils.readTemplateFile(this, fileName)
                 content = Utils.dealTemplateContent(project, data, content)
                 Utils.writeToFile(content, "$resPath/layout/", data.layout + ".xml")

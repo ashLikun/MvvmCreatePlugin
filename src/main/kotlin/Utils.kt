@@ -387,7 +387,7 @@ internal object Utils {
                             houxuContent.append("\n$line")
                         }
                     }
-                    houxuContent.delete(0, 1)
+//                    houxuContent.delete(0, 1)
                     randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
                     houxuContent.insert(0, content)
                     randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))

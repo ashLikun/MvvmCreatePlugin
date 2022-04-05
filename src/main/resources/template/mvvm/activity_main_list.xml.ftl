@@ -16,7 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:stb_title="${mvvmDesc}"></com.ashlikun.supertoobar.SuperToolBar>
+        app:stb_title="${mvvmDesc}"/>
 
     <com.ashlikun.xrecycleview.SuperRecyclerView
         android:id="@+id/superRecyclerView"
@@ -25,5 +25,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"></com.ashlikun.xrecycleview.SuperRecyclerView>
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
