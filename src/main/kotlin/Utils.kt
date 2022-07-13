@@ -335,7 +335,7 @@ internal object Utils {
                 var line = ""
                 while (randomAccessFile.readLine()?.also { line = it } != null) {
                     // 找到application节点的末尾
-                    if (!isZhaoDao){
+                    if (!isZhaoDao) {
                         isZhaoDao = line.trim() == "}"
                     }
                     if (isZhaoDao) {
@@ -465,16 +465,11 @@ internal object Utils {
     fun getModeName(project: Project, virtualFile: VirtualFile): String {
         val module = ModuleUtil.findModuleForFile(virtualFile, project)
         return try {
-            val aa = module?.name?.lastIndexOf(".") ?: -1
-            if (aa != -1) {
-                val name = module?.name?.substring(aa + 1) ?: ""
-                if (name.startsWith("module_")) {
-                    name.replace("module_", "")
-                } else {
-                    ""
-                }
+            val module_ = module?.name?.split(".")?.find { it.startsWith("module_") }
+            if (!module_.isNullOrBlank()) {
+                module_.replace("module_", "")
             } else {
-                module?.name ?: ""
+                ""
             }
         } catch (e: Exception) {
             ""
