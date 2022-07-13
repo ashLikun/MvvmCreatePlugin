@@ -304,7 +304,7 @@ internal object Utils {
         //直播列表
         //    const val FRAGMENT_LIVE_LIST = "/live/fragment/list"
         val content =
-            "\n\n    //${data.desc}\n    const val ${data.routerPath} = \"/${modeName}/${if (data.isActivity) "activity" else "fragment"}/${data.name.lowercase()}\""
+            "\n    //${data.desc}\n    const val ${data.routerPath} = \"/${modeName}/${if (data.isActivity) "activity" else "fragment"}/${data.name.lowercase()}\""
 
         val psiFiles = FilenameIndex.getFilesByName(
             project, "RouterPath.kt", GlobalSearchScope.projectScope(
@@ -336,7 +336,7 @@ internal object Utils {
                 while (randomAccessFile.readLine()?.also { line = it } != null) {
                     houxuContent.append("\n$line")
                 }
-                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
+                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length + 1)
                 houxuContent.insert(0, "$content")
                 randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
             } catch (e: Exception) {
@@ -356,7 +356,7 @@ internal object Utils {
      */
     fun addRouterJump(project: Project, virtualFile: VirtualFile, data: InputContentData) {
         val modeName = getModeName(project, virtualFile)
-        val content = "\n\n    /**\n" +
+        val content = "\n    /**\n" +
                 "     * 启动${data.desc}页面\n" +
                 "     */\n" +
                 "    fun start${data.name}() = start(path = RouterPath.${data.routerPath})"
@@ -390,7 +390,7 @@ internal object Utils {
                 while (randomAccessFile.readLine()?.also { line = it } != null) {
                     houxuContent.append("\n$line")
                 }
-                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
+                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length + 1)
                 houxuContent.insert(0, "$content")
                 randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
             } catch (e: Exception) {
@@ -437,7 +437,7 @@ internal object Utils {
                         }
                     }
 //                    houxuContent.delete(0, 1)
-                    randomAccessFile.seek(randomAccessFile.length() - houxuContent.length - 1)
+                    randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
                     houxuContent.insert(0, "\n$content")
                     randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
                 } catch (e: Exception) {
