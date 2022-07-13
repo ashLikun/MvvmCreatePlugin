@@ -13,9 +13,7 @@ import ${httpCallbackHandle}
  */
 class ${vmName} : BaseViewModel(){
 
-    val mainData: MutableLiveData<String> by lazy {
-        get()
-    }
+    val mainData = get<String>()
 
     override fun onCreate() {
         super.onCreate()
