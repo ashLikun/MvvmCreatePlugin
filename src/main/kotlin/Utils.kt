@@ -336,7 +336,7 @@ internal object Utils {
                 while (randomAccessFile.readLine()?.also { line = it } != null) {
                     houxuContent.append("\n$line")
                 }
-                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
+                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length - 1)
                 houxuContent.insert(0, "$content")
                 randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
             } catch (e: Exception) {
@@ -390,7 +390,7 @@ internal object Utils {
                 while (randomAccessFile.readLine()?.also { line = it } != null) {
                     houxuContent.append("\n$line")
                 }
-                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
+                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length - 1)
                 houxuContent.insert(0, "$content")
                 randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
             } catch (e: Exception) {
@@ -437,7 +437,7 @@ internal object Utils {
                         }
                     }
 //                    houxuContent.delete(0, 1)
-                    randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
+                    randomAccessFile.seek(randomAccessFile.length() - houxuContent.length - 1)
                     houxuContent.insert(0, "\n$content")
                     randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
                 } catch (e: Exception) {
