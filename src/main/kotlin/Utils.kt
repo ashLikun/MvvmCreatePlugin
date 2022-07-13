@@ -303,19 +303,9 @@ internal object Utils {
         val modeName = getModeName(project, virtualFile)
         //直播列表
         //    const val FRAGMENT_LIVE_LIST = "/live/fragment/list"
-        val content = StringBuilder()
-        content.append("    //")
-        content.append(data.desc)
-        content.append("\n    const val ")
-        content.append(data.routerPath)
-        content.append(" = \"")
-        content.append("/")
-        content.append(modeName)
-        content.append("/")
-        content.append(if (data.isActivity) "activity" else "fragment")
-        content.append("/")
-        content.append(data.name.lowercase())
-        content.append("\"")
+        val content =
+            "\n\n    //${data.desc}\n    const val ${data.routerPath} = \"/${modeName}/${if (data.isActivity) "activity" else "fragment"}/${data.name.lowercase()}\""
+
         val psiFiles = FilenameIndex.getFilesByName(
             project, "RouterPath.kt", GlobalSearchScope.projectScope(
                 project
@@ -330,17 +320,21 @@ internal object Utils {
                 randomAccessFile = RandomAccessFile(manifestPath, "rw")
                 //追加文件后续的内容
                 val houxuContent = StringBuilder()
-                var isZhaoDao = false
                 // 每一行的内容
                 var line = ""
+                //反向查找
+                var pos = randomAccessFile.length()
+                while (pos > 0) {
+                    //使光标向前移动一位
+                    pos--
+                    randomAccessFile.seek(pos)
+                    if (randomAccessFile.readLine() == "}") {
+                        randomAccessFile.seek(pos)
+                        break
+                    }
+                }
                 while (randomAccessFile.readLine()?.also { line = it } != null) {
-                    // 找到application节点的末尾
-                    if (!isZhaoDao) {
-                        isZhaoDao = line.trim() == "}"
-                    }
-                    if (isZhaoDao) {
-                        houxuContent.append("\n$line")
-                    }
+                    houxuContent.append("\n$line")
                 }
                 randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
                 houxuContent.insert(0, "$content")
@@ -355,6 +349,61 @@ internal object Utils {
                 }
             }
         }
+    }
+
+    /**
+     * 生成RouterJump 的常量
+     */
+    fun addRouterJump(project: Project, virtualFile: VirtualFile, data: InputContentData) {
+        val modeName = getModeName(project, virtualFile)
+        val content = "\n\n    /**\n" +
+                "     * 启动${data.desc}页面\n" +
+                "     */\n" +
+                "    fun start${data.name}() = start(path = RouterPath.${data.routerPath})"
+        val psiFiles = FilenameIndex.getFilesByName(
+            project, "RouterJump.kt", GlobalSearchScope.projectScope(
+                project
+            )
+        )
+        psiFiles.forEach {
+            val currentVFile = it.virtualFile
+            //            if (currentVFile.getPath().contains(mainPath)) {//本模块的文件
+            var randomAccessFile: RandomAccessFile? = null
+            val manifestPath = currentVFile.path
+            try {
+                randomAccessFile = RandomAccessFile(manifestPath, "rw")
+                //追加文件后续的内容
+                val houxuContent = StringBuilder()
+                // 每一行的内容
+                var line = ""
+                //反向查找
+                var pos = randomAccessFile.length()
+                while (pos > 0) {
+                    //使光标向前移动一位
+                    pos--
+                    randomAccessFile.seek(pos)
+                    if (randomAccessFile.readLine() == "}") {
+                        randomAccessFile.seek(pos)
+                        break
+                    }
+                }
+                while (randomAccessFile.readLine()?.also { line = it } != null) {
+                    houxuContent.append("\n$line")
+                }
+                randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
+                houxuContent.insert(0, "$content")
+                randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                try {
+                    randomAccessFile?.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
     }
 
     /**
@@ -389,7 +438,7 @@ internal object Utils {
                     }
 //                    houxuContent.delete(0, 1)
                     randomAccessFile.seek(randomAccessFile.length() - houxuContent.length)
-                    houxuContent.insert(0, content)
+                    houxuContent.insert(0, "\n$content")
                     randomAccessFile.write(houxuContent.toString().toByteArray(charset("utf-8")))
                 } catch (e: Exception) {
                     e.printStackTrace()

@@ -83,14 +83,20 @@ class MvvmCreateAction : AnAction() {
                 content = Utils.readTemplateFile(this, fileName)
                 content = Utils.dealTemplateContent(project, data, content)
                 Utils.writeToFile(content, virtualFile.path + "/view/activity/", data.view + ".kt")
+                //生成RouterPath常量
                 Utils.addRouterPath(project, virtualFile, data)
+                //生成RouterJump方法
+                Utils.addRouterJump(project, virtualFile, data)
             }
             CodeType.Fragment -> {
                 fileName = "${basePath}/MainFragment.kt.ftl"
                 content = Utils.readTemplateFile(this, fileName)
                 content = Utils.dealTemplateContent(project, data, content)
                 Utils.writeToFile(content, virtualFile.path + "/view/fragment/", data.view + ".kt")
+                //生成RouterPath常量
                 Utils.addRouterPath(project, virtualFile, data)
+                //生成RouterJump方法
+                Utils.addRouterJump(project, virtualFile, data)
             }
             CodeType.Layout -> {
                 fileName = if (data.isList) "activity_main_list.xml.ftl" else "activity_main.xml.ftl"
