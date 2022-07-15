@@ -514,9 +514,10 @@ internal object Utils {
     fun getModeName(project: Project, virtualFile: VirtualFile): String {
         val module = ModuleUtil.findModuleForFile(virtualFile, project)
         return try {
-            val module_ = module?.name?.split(".")?.find { it.startsWith("module_") }
+            //baseproject.component_common.main
+            val module_ = module?.name?.split(".")?.find { it.startsWith("module_") || it.startsWith("component_") }
             if (!module_.isNullOrBlank()) {
-                module_.replace("module_", "")
+                module_.replace("module_", "").replace("component_", "")
             } else {
                 ""
             }

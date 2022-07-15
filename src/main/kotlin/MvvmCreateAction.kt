@@ -95,8 +95,6 @@ class MvvmCreateAction : AnAction() {
                 Utils.writeToFile(content, virtualFile.path + "/view/fragment/", data.view + ".kt")
                 //生成RouterPath常量
                 Utils.addRouterPath(project, virtualFile, data)
-                //生成RouterJump方法
-                Utils.addRouterJump(project, virtualFile, data)
             }
             CodeType.Layout -> {
                 fileName = if (data.isList) "activity_main_list.xml.ftl" else "activity_main.xml.ftl"
